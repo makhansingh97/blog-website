@@ -18,8 +18,13 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+const posts = [];
+
 app.get("/", function (req, res) {
-  res.render("home", { startingContent: homeStartingContent });
+  res.render("home", {
+    startingContent: homeStartingContent,
+    posts: posts,
+  });
 });
 
 app.get("/about", function (req, res) {
@@ -28,6 +33,20 @@ app.get("/about", function (req, res) {
 
 app.get("/contact", function (req, res) {
   res.render("contact", { contactContent: contactContent });
+});
+
+app.get("/compose", function (req, res) {
+  res.render("compose");
+});
+
+app.post("/compose", function (req, res) {
+  const data = {
+    title: req.body.postTitle,
+    content: req.body.postBody,
+  };
+
+  posts.push(data);
+  res.redirect("/");
 });
 
 app.listen(3000, function () {
