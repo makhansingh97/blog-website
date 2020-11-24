@@ -47,9 +47,7 @@ app.get("/posts/:postName", function (req, res) {
     const storedTitle = _.kebabCase(post.title);
 
     if (requestedTitle === storedTitle) {
-      console.log("Match Found!");
-    } else {
-      console.log("Match Not Found!");
+      res.render("post", { title: post.title, content: post.content });
     }
   });
 });
